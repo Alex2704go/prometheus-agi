@@ -180,9 +180,9 @@ class Prometheus(nn.Module):
         self.norm = nn.LayerNorm(dim)
         self.lm_head = nn.Linear(dim, vocab_size)
         
-    def forward(self, x: Tensor) -> Tensor:
+    def forward(self, input_ids: Tensor) -> Tensor:
         # Встраивание токенов
-        x = self.embedding(x)
+        x = self.embedding(input_ids)
         
         # Применение блоков
         for block in self.blocks:
@@ -274,4 +274,5 @@ def train_distributed(model, dataloader, optimizer, device, epochs=10):
                       f"Loss: {loss.item():.4f} | Topo: {topo_reg.item():.4f} | "
                       f"Gate Mean: {gate_analysis.get('block_0', {}).get('mean', 0):.4f}")
     
+
     return model
