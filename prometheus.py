@@ -180,7 +180,7 @@ class Prometheus(nn.Module):
         self.norm = nn.LayerNorm(dim)
         self.lm_head = nn.Linear(dim, vocab_size)
         
-    def forward(self, input_ids: Tensor) -> Tensor:
+    def forward(self, input_ids: Tensor, attention_mask: Tensor = None) -> Tensor:
         # Встраивание токенов
         x = self.embedding(input_ids)
         
@@ -276,3 +276,4 @@ def train_distributed(model, dataloader, optimizer, device, epochs=10):
     
 
     return model
+
